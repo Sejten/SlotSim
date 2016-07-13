@@ -1,13 +1,13 @@
-package test.java.com.sejten.slotsimulation.slot;
+package com.sejten.slotsimulation.slot;
 
-import com.sejten.slotsimulation.slot.*;
+import com.sejten.slotsimulation.winterberries.WinterberriesGameConf;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by piotr.s
@@ -17,7 +17,7 @@ public class WinAnalyserTest {
     public void testEvaluateReelWindow() throws Exception {
         // given
         ReelWindow window;
-        GameConf gc = new GameConf();
+        GameConf gc = new WinterberriesGameConf();
         WinAnalyser we = new WinAnalyser(gc);
         Reel r1;
         Reel r2;
@@ -46,18 +46,13 @@ public class WinAnalyserTest {
         winningPaylins = we.evaluateReelWindow(window);
 
         shouldBe = new ArrayList<>();
-        shouldBe.add(new WinningPayline(new Payline(2, 2, 2, 2, 2)).addWinningColumnPosition(0, 1, 2, 3, 4));
-        shouldBe.add(new WinningPayline(new Payline(0, 1, 2, 1, 0)).addWinningColumnPosition(1, 2, 3));
-        shouldBe.add(new WinningPayline(new Payline(0, 2, 2, 2, 0)).addWinningColumnPosition(1, 2, 3));
-        shouldBe.add(new WinningPayline(new Payline(2, 1, 2, 1, 2)).addWinningColumnPosition(0, 1, 2, 3, 4));
-        shouldBe.add(new WinningPayline(new Payline(2, 0, 2, 0, 2)).addWinningColumnPosition(2, 3, 4));
-        shouldBe.add(new WinningPayline(new Payline(1, 1, 2, 1, 1)).addWinningColumnPosition(1, 2, 3, 4));
-        shouldBe.add(new WinningPayline(new Payline(1, 2, 2, 2, 1)).addWinningColumnPosition(1, 2, 3, 4));
+        shouldBe.add(new WinningPayline(new Payline(2, 2, 2, 2, 2)).addWinningColumnPosition(0, 1, 2, 3, 4).setSymbol(sym9));
+        shouldBe.add(new WinningPayline(new Payline(2, 1, 2, 1, 2)).addWinningColumnPosition(0, 1, 2, 3, 4).setSymbol(sym9));
         //then
         assertEquals(winningPaylins, shouldBe);
 
         // when
-        r1 = new Reel("Reel_1", Arrays.asList(sym3, sym4, sym5));
+        r1 = new Reel("Reel_1", Arrays.asList(sym6, sym6, sym6));
         r2 = new Reel("Reel_2", Arrays.asList(sym6, sym7, sym8));
         r3 = new Reel("Reel_3", Arrays.asList(sym9, sym6, sym4));
         r4 = new Reel("Reel_4", Arrays.asList(sym6, sym3, sym7));
@@ -68,9 +63,27 @@ public class WinAnalyserTest {
         winningPaylins = we.evaluateReelWindow(window);
 
         shouldBe = new ArrayList<>();
-        shouldBe.add(new WinningPayline(new Payline(0, 0, 1, 0, 0)).addWinningColumnPosition(1, 2, 3));
-        shouldBe.add(new WinningPayline(new Payline(1, 0, 1, 0, 1)).addWinningColumnPosition(1, 2, 3));
-        shouldBe.add(new WinningPayline(new Payline(2, 0, 1, 0, 2)).addWinningColumnPosition(1, 2, 3, 4));
+        shouldBe.add(new WinningPayline(new Payline(0, 0, 1, 0, 0)).addWinningColumnPosition(0, 1, 2, 3).setSymbol(sym6));
+        shouldBe.add(new WinningPayline(new Payline(1, 0, 1, 0, 1)).addWinningColumnPosition(0, 1, 2, 3).setSymbol(sym6));
+        shouldBe.add(new WinningPayline(new Payline(2, 0, 1, 0, 2)).addWinningColumnPosition(0, 1, 2, 3, 4).setSymbol(sym6));
+        //then
+        assertEquals(winningPaylins, shouldBe);
+
+        // when
+        r1 = new Reel("Reel_1", Arrays.asList(sym4, sym8, sym8));
+        r2 = new Reel("Reel_2", Arrays.asList(sym4, sym4, sym4));
+        r3 = new Reel("Reel_3", Arrays.asList(sym6, sym6, sym4));
+        r4 = new Reel("Reel_4", Arrays.asList(sym9, sym7, sym7));
+        r5 = new Reel("Reel_5", Arrays.asList(sym8, sym8, sym3));
+        window = new ReelWindow();
+        window.addReel(r1, r2, r3, r4, r5);
+
+        winningPaylins = we.evaluateReelWindow(window);
+
+        shouldBe = new ArrayList<>();
+        shouldBe.add(new WinningPayline(new Payline(0, 1, 2, 1, 0)).addWinningColumnPosition(0, 1, 2).setSymbol(sym4));
+        shouldBe.add(new WinningPayline(new Payline(0, 0, 2, 0, 0)).addWinningColumnPosition(0, 1, 2).setSymbol(sym4));
+        shouldBe.add(new WinningPayline(new Payline(0, 2, 2, 2, 0)).addWinningColumnPosition(0, 1, 2).setSymbol(sym4));
         //then
         assertEquals(winningPaylins, shouldBe);
     }

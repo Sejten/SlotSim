@@ -27,6 +27,14 @@ public class Payline {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 1;
+        for (Integer i : paylineColumns)
+            hash = 37 * hash + i;
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object o) {
         return o.equals(toString());
     }

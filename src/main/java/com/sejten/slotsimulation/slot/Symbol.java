@@ -5,11 +5,16 @@ package com.sejten.slotsimulation.slot;
  */
 public class Symbol {
     private String name = "";
-    private final Prize prize;
+    // lambda for function that calculates prize based on symbol occurrences
+    private Prize prize = null;
 
     public Symbol(String n, Prize pa) {
         name = n;
         prize = pa;
+    }
+
+    public Symbol(String n) {
+        name = n;
     }
 
     public boolean equals(Symbol other) {
@@ -20,7 +25,7 @@ public class Symbol {
         return name;
     }
 
-    public int getPrize(int occurrences){
+    public int getPrize(int occurrences) {
         return prize.evaluate(occurrences);
     }
 

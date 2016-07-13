@@ -33,7 +33,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.sejten.slotsimulation.gui.Main</mainClass>
+                            <mainClass>com.sejten.slotsimulation.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

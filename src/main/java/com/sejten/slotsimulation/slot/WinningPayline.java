@@ -25,8 +25,9 @@ public class WinningPayline {
         return this;
     }
 
-    public void setPayline(Payline p) {
+    public WinningPayline setPayline(Payline p) {
         payline = p;
+        return this;
     }
 
     public Payline getPayline() {
@@ -47,11 +48,12 @@ public class WinningPayline {
     }
 
     public String toString() {
-        return "Winning line " + getPayline() + " with " + getWinningSymbolCount() + " occurences of " + symbol + ".";
+        return "Winning line " + getPayline() + " with " + getWinningSymbolCount() + " occurences(" + winningColumnPositions + ") of " + symbol + ".";
     }
 
-    public void setSymbol(Symbol symbol) {
+    public WinningPayline setSymbol(Symbol symbol) {
         this.symbol = symbol;
+        return this;
     }
 
     public Symbol getSymbol() {

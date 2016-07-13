@@ -15,6 +15,13 @@ public class Reel {
         reel = r;
     }
 
+    public Reel(Reel r) {
+        reel = new ArrayList<>();
+        for (int i = 0; i < r.getReelLength(); i++) {
+            reel.add(r.getSymbolAt(i));
+        }
+    }
+
     public Symbol getSymbolAt(int position) {
         return reel.get(position % reel.size());
     }
@@ -36,10 +43,19 @@ public class Reel {
         for (Symbol sym : reel) {
             reelString += sym.getName() + " ";
         }
+        reelString = reelString.trim();
         return reelString;
     }
 
-    public String getName() {
-        return name;
+    public int countSymbols(Symbol sym) {
+        int counter = 0;
+        for (Symbol s : reel)
+            if (sym.equals(s))
+                counter++;
+        return counter;
+    }
+
+    public void setSymbolAt(Symbol sym, int row) {
+        reel.set(row, sym);
     }
 }

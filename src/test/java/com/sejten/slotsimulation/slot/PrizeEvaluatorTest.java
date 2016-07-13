@@ -1,13 +1,12 @@
-package test.java.com.sejten.slotsimulation.slot;
+package com.sejten.slotsimulation.slot;
 
-import com.sejten.slotsimulation.slot.*;
+import com.sejten.slotsimulation.winterberries.WinterberriesGameConf;
 import org.testng.annotations.Test;
-
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by piotr.s
@@ -16,7 +15,7 @@ public class PrizeEvaluatorTest {
     @Test
     public void testEvaluate() throws Exception {
         //given
-        GameConf gc = new GameConf();
+        GameConf gc = new WinterberriesGameConf();
         // setting up result reel window
         Symbol sym3 = gc.getSymbol("SYM3");
         Symbol sym4 = gc.getSymbol("SYM4");

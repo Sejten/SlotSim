@@ -9,31 +9,28 @@ import java.util.*;
  * Created by piotr.s
  */
 public class StatisticsProcessor {
-    private final int numberOfSpins;
+    private int numberOfSpins;
     private int hits = 0;
     private final Map<Symbol, Map<Integer, Integer>> symbolsHitsCounter = new HashMap<>();
-
-    public StatisticsProcessor(int numberOfSpins) {
-        this.numberOfSpins = numberOfSpins;
-
-    }
+    //private final Map<Payline, Integer> paylineHF = new HashMap<>();
 
     public void process(List<WinningPayline> winningPaylines) {
         if (winningPaylines.size() == 0)
             return;
         hits++;
         for (WinningPayline wp : winningPaylines) {
-            if (symbolsHitsCounter.containsKey(wp.getSymbol())) {
-                Map<Integer, Integer> currentSymbolHitCount = symbolsHitsCounter.get(wp.getSymbol());
-                if (currentSymbolHitCount.containsKey(wp.getWinningSymbolCount())) {
-                    Integer numberOfHits = currentSymbolHitCount.get(wp.getWinningSymbolCount());
-                    currentSymbolHitCount.put(wp.getWinningSymbolCount(), numberOfHits + 1);
-                } else {
-                    currentSymbolHitCount.put(wp.getWinningSymbolCount(), 0);
-                }
-            } else {
+//            if (!paylineHF.containsKey(wp.getPayline()))
+//                paylineHF.put(wp.getPayline(), 0);
+//            paylineHF.put(wp.getPayline(), paylineHF.get(wp.getPayline()) + 1);
+
+
+            if (!symbolsHitsCounter.containsKey(wp.getSymbol()))
                 symbolsHitsCounter.put(wp.getSymbol(), new HashMap<>());
-            }
+            Map<Integer, Integer> currentSymbolHitCount = symbolsHitsCounter.get(wp.getSymbol());
+            if (!currentSymbolHitCount.containsKey(wp.getWinningSymbolCount()))
+                currentSymbolHitCount.put(wp.getWinningSymbolCount(), 0);
+            Integer numberOfHits = currentSymbolHitCount.get(wp.getWinningSymbolCount());
+            currentSymbolHitCount.put(wp.getWinningSymbolCount(), numberOfHits + 1);
         }
     }
 
@@ -41,9 +38,10 @@ public class StatisticsProcessor {
     public String toString() {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);
-        String s = "Number of spins: " + NumberFormat.getNumberInstance(Locale.US).format(numberOfSpins) + "\n" +
+        String s = "Number of spins: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(numberOfSpins) + "\n" +
                 "Hits: " + hits + "\n" +
-                "HF: " + NumberFormat.getNumberInstance(Locale.US).format((hits / new Double(numberOfSpins))*100.0) + "%\n";
+                "HF: " + NumberFormat.getNumberInstance(Locale.US).format((hits / new Double(numberOfSpins)) * 100.0) + "%\n";
+
         Iterator it = symbolsHitsCounter.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
@@ -55,6 +53,11 @@ public class StatisticsProcessor {
             }
             it.remove();
         }
+//        s += "\n" + paylineHF;
         return s;
+    }
+
+    public void setNumberOfSpins(int numberOfSpins) {
+        this.numberOfSpins = numberOfSpins;
     }
 }
