@@ -52,7 +52,7 @@ public class WinterberriesGui extends SlotGui {
             showSpin(spinResults.get(0));
         }
         updateCashBalance();
-        updateWinBalance(spinResults.get(spinResults.size() - 1).prize);
+        //updateWinBalance(spinResults.get(spinResults.size() - 1).prize.get(0).amount);
     }
 
     public void removeAllIce() {
@@ -64,8 +64,8 @@ public class WinterberriesGui extends SlotGui {
     }
 
     private void showSpin(SpinResult spinResult) {
-        for (int column = 0; column < spinResult.reelWindow.getReelsWindowWidth(); column++)
-            for (int row = 0; row < spinResult.reelWindow.getReelsLength(); row++) {
+        for (int column = 0; column < spinResult.reelWindow.getWidth(); column++)
+            for (int row = 0; row < spinResult.reelWindow.getLength(); row++) {
                 symbolMatrix.get(row).get(column).changeSymbolTo(spinResult.reelWindow.getSymbolByCoords(column, row).getName());
             }
         if (spinResult.winningPaylines.size() > 0)
@@ -84,7 +84,7 @@ public class WinterberriesGui extends SlotGui {
     }
 
     private void createWSymbols() {
-        for (int column = 0; column < conf.getNumberOfColumns(); column++)
+        for (int column = 0; column < conf.getNumberOfColumns("BASIC"); column++)
             for (int row = 0; row < conf.getNumberOfRows(); row++) {
                 Symbol s = symbolMatrix.get(row).get(column);
                 Symbol iceSymbol = new Symbol(rootWindow)

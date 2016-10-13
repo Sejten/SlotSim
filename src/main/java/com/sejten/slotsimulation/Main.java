@@ -3,6 +3,7 @@ package com.sejten.slotsimulation;
 import com.sejten.slotsimulation.gui.SlotPlayWindow;
 import com.sejten.slotsimulation.gui.SlotSimulationWindow;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +28,7 @@ public class Main extends Application {
 
         primaryStage.show();
 
-        //Platform.exit();
+//        Platform.exit();
     }
 
     public static void main(String[] args) {

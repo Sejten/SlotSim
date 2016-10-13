@@ -3,8 +3,8 @@ package com.sejten.slotsimulation.gui;
 import com.sejten.slotsimulation.slot.GameConf;
 import com.sejten.slotsimulation.slot.Payline;
 import com.sejten.slotsimulation.slot.SlotController;
-import com.sejten.slotsimulation.winterberries.WinterberriesGameConf;
-import com.sejten.slotsimulation.winterberries.WinterberriesSlotController;
+import com.sejten.slotsimulation.games.winterberries.WinterberriesGameConf;
+import com.sejten.slotsimulation.games.winterberries.WinterberriesSlotController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -102,7 +102,7 @@ public class SlotGui {
     }
 
     protected void stopAllAnimations() {
-        for (int column = 0; column < conf.getNumberOfColumns(); column++)
+        for (int column = 0; column < conf.getNumberOfColumns("BASIC"); column++)
             for (int row = 0; row < conf.getNumberOfRows(); row++)
                 symbolMatrix.get(row).get(column).stopAnimation();
     }
@@ -114,7 +114,7 @@ public class SlotGui {
 
         for (int row = 0; row < conf.getNumberOfRows(); row++) {
             List<Symbol> rowArray = new ArrayList<>();
-            for (int column = 0; column < conf.getNumberOfColumns(); column++) {
+            for (int column = 0; column < conf.getNumberOfColumns("BASIC"); column++) {
                 // symbol image
                 Symbol s = new Symbol(rootWindow)
                         .setId("symbolImageColumn" + column + "Row" + row)

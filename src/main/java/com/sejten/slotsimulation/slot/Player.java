@@ -11,13 +11,23 @@ import static java.lang.Math.sqrt;
  * Created by piotr.s
  */
 public class Player {
-    private double coinBalance = 1000;
+    private double coinBalance = 0;
     private final double bet = 25.0;
+    private int freespins = 0;
 
     private List<Double> totalWon = new ArrayList<>();
     private double totalBet = 0;
+    private double totalFreespinsWon = 0;
     private int numberOfBets = 0;
     private double variance = 0;
+
+    public Player(double coinBalance) {
+        this.coinBalance = coinBalance;
+    }
+
+    public Player() {
+        this.coinBalance = 1000;
+    }
 
     public double getCoinBalance() {
         return coinBalance;
@@ -31,15 +41,29 @@ public class Player {
         return bet;
     }
 
-    public void addPrize(double prize) {
-        coinBalance += prize;
-        totalWon.add(prize);
+    public void addPrize(List<Prize> prizes) {
+        prizes.stream().filter(p -> p.type == PrizeType.COINS).forEach(p -> {
+            coinBalance += p.amount;
+            totalWon.add(p.amount);
+        });
+        prizes.stream().filter(p -> p.type == PrizeType.FREESPINS).forEach(p -> {
+            freespins += p.amount;
+            totalFreespinsWon += p.amount;
+        });
     }
 
     public void putBet() {
-        coinBalance -= bet;
-        totalBet += bet;
+        if (isPlayingFreespins()) {
+            freespins--;
+        } else {
+            coinBalance -= bet;
+            totalBet += bet;
+        }
         numberOfBets++;
+    }
+
+    public boolean isPlayingFreespins() {
+        return freespins > 0;
     }
 
     public Double getTotalWonAmount() {
@@ -64,6 +88,7 @@ public class Player {
         return "Rtp: " + getRtp() +
                 " \nTotal Bet: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalBet) +
                 " \nTotal Won: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(getTotalWonAmount()) +
+                " \nTotal Freespins Won: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalFreespinsWon) +
                 " \nExpected value: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(getExpectedValue()) +
                 " \nVariance: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(getVariance()) +
                 " \nStd dev: " + NumberFormat.getNumberInstance(Locale.ENGLISH).format(getStdDev());
@@ -71,5 +96,10 @@ public class Player {
 
     public double getRtp() {
         return getTotalWonAmount() / totalBet;
+    }
+
+
+    public int getFreespinAmount() {
+        return freespins;
     }
 }

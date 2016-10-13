@@ -2,6 +2,7 @@ package com.sejten.slotsimulation.slot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by piotr.s
@@ -50,7 +51,15 @@ public class Reel {
     public int countSymbols(Symbol sym) {
         int counter = 0;
         for (Symbol s : reel)
-            if (sym.equals(s))
+            if (sym.equals(s) || (sym.getType() != SymbolType.NORMAL && sym.getType() == s.getType()))
+                counter++;
+        return counter;
+    }
+
+    public int countSymbols(SymbolType stype) {
+        int counter = 0;
+        for (Symbol s : reel)
+            if (s.getType() == stype)
                 counter++;
         return counter;
     }
@@ -58,4 +67,5 @@ public class Reel {
     public void setSymbolAt(Symbol sym, int row) {
         reel.set(row, sym);
     }
+
 }

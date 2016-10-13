@@ -1,14 +1,15 @@
 package com.sejten.slotsimulation.slot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by piotr.s on 2016-05-18.
+ * This class is container for result of single spin
  */
 public class SpinResult {
     public List<WinningPayline> winningPaylines;
     public ReelWindow reelWindow;
-    public double prize = 0;
+    public List<Prize> prize = new ArrayList();
 
     public SpinResult(ReelWindow rw, List<WinningPayline> wp) {
         winningPaylines = wp;
@@ -16,7 +17,7 @@ public class SpinResult {
     }
 
     public SpinResult(ReelWindow rw) {
-        reelWindow = rw;
+        reelWindow = new ReelWindow(rw);
     }
 
     public SpinResult(SpinResult sr) {

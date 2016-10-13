@@ -1,6 +1,6 @@
 package com.sejten.slotsimulation.slot;
 
-import com.sejten.slotsimulation.winterberries.WinterberriesGameConf;
+import com.sejten.slotsimulation.games.winterberries.WinterberriesGameConf;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -13,15 +13,15 @@ import static org.testng.Assert.assertEquals;
 public class ReelTest {
     @Test
     public void testGetSymbolAt() throws Exception {
-        GameConf gc = new WinterberriesGameConf();
+
         // when
-        Symbol sym3 = gc.getSymbol("SYM3");
-        Symbol sym4 = gc.getSymbol("SYM4");
-        Symbol sym5 = gc.getSymbol("SYM5");
-        Symbol sym6 = gc.getSymbol("SYM6");
-        Symbol sym7 = gc.getSymbol("SYM7");
-        Symbol sym8 = gc.getSymbol("SYM8");
-        Symbol sym9 = gc.getSymbol("SYM9");
+        Symbol sym3 = new Symbol("SYM3", (x) -> null);
+        Symbol sym4 = new Symbol("SYM4", (x) -> null);
+        Symbol sym5 = new Symbol("SYM5", (x) -> null);
+        Symbol sym6 = new Symbol("SYM6", (x) -> null);
+        Symbol sym7 = new Symbol("SYM7", (x) -> null);
+        Symbol sym8 = new Symbol("SYM8", (x) -> null);
+        Symbol sym9 = new Symbol("SYM9", (x) -> null);
 
         Reel r1 = new Reel("Reel_1", Arrays.asList(sym3, sym4, sym5, sym6, sym7, sym8, sym9));
 

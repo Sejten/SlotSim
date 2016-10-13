@@ -14,7 +14,7 @@ public class ReelWindow {
     }
 
     public ReelWindow(ReelWindow rw) {
-        for (int i = 0; i < rw.getReelsWindowWidth(); i++) {
+        for (int i = 0; i < rw.getWidth(); i++) {
             addReel(new Reel(rw.getReelByColumn(i)));
         }
     }
@@ -42,6 +42,13 @@ public class ReelWindow {
         return counter;
     }
 
+    public int countSymbols(SymbolType stype) {
+        int counter = 0;
+        for (Reel r : reelWindow)
+            counter += r.countSymbols(stype);
+        return counter;
+    }
+
     public String toString() {
         if (reelWindow.size() == 0)
             return "";
@@ -61,11 +68,11 @@ public class ReelWindow {
         return windowString.trim();
     }
 
-    public int getReelsWindowWidth() {
+    public int getWidth() {
         return reelWindow.size();
     }
 
-    public int getReelsLength() {
+    public int getLength() {
         return reelWindow.get(0).getReelLength();
     }
 }

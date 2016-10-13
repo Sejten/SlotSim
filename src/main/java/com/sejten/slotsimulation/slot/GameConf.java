@@ -1,16 +1,14 @@
 package com.sejten.slotsimulation.slot;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by piotr.s
  */
 public abstract class GameConf {
-    protected final List<Reel> reels = new ArrayList<>();
+    protected final Map<String, List<Reel>> reels = new HashMap<>();
     protected final Map<String, Symbol> symbols = new HashMap<>();
+    protected final Map<String, Symbol> scatterSymbols = new HashMap<>();
     protected final List<Payline> paylines = new ArrayList<>();
     protected int numberOfRows = 0;
 
@@ -22,12 +20,12 @@ public abstract class GameConf {
         return numberOfRows;
     }
 
-    public int getNumberOfColumns() {
-        return reels.size();
+    public int getNumberOfColumns(String name) {
+        return reels.get(name).size();
     }
 
-    public List<Reel> getReels() {
-        return reels;
+    public List<Reel> getReels(String name) {
+        return reels.get(name);
     }
 
     public List<Payline> getPaylines() {
@@ -36,5 +34,10 @@ public abstract class GameConf {
 
     public Map<String, Symbol> getSymbols() {
         return symbols;
+    }
+
+    public Symbol getHighestSymbol() {
+        final Comparator<Symbol> comp = (s1, s2) -> Double.compare(s1.getPrize(5).get().amount, s2.getPrize(5).get().amount);
+        return symbols.values().stream().max(comp).get();
     }
 }
